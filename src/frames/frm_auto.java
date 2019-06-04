@@ -4,18 +4,41 @@
  * and open the template in the editor.
  */
 package frames;
-
+import Clases.Auto;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Max
  */
 public class frm_auto extends javax.swing.JFrame {
-
+    int opc = 0;
     /**
      * Creates new form frm_auto
      */
+    
+    public void imprimir(){
+        String columna[] = {"Código", "Placa","Marca", "Color", "Combustible", "Transmición","Fecha de Adquisición","Carga útil"};
+        DefaultTableModel modelo = new DefaultTableModel(null, columna);
+        for (int i = 0; i < frm_main.autos.size(); i++) {
+            String fila[] = new String[8];
+            fila[0] = frm_main.autos.get(i).getCodigo();
+            fila[1] = frm_main.autos.get(i).getPlaca();
+            fila[2] = frm_main.autos.get(i).getMarca();
+            fila[3] = frm_main.autos.get(i).getColor();
+            fila[4] = frm_main.autos.get(i).getTipo_combustible();
+            fila[5] = frm_main.autos.get(i).getTipo_transmicion();
+            fila[6] = frm_main.autos.get(i).getFecha_adquisicion().toLocaleString();
+            fila[7] = Double.toString(frm_main.autos.get(i).getCarga_util());
+            modelo.addRow(fila);
+        }
+        tbl_mostrar.setModel(modelo);
+    }
+    
     public frm_auto() {
         initComponents();
+        imprimir();
         this.setLocationRelativeTo(null);
     }
 
@@ -41,23 +64,25 @@ public class frm_auto extends javax.swing.JFrame {
         txt_placa = new javax.swing.JTextField();
         txt_marca = new javax.swing.JTextField();
         txt_carga_util = new javax.swing.JTextField();
-        txt_fecha_adquisicion = new javax.swing.JTextField();
         cmb_color = new javax.swing.JComboBox<String>();
         cmb_tipo_combustible = new javax.swing.JComboBox<String>();
         cmb_tipo_transmicion = new javax.swing.JComboBox<String>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_mostrar = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
         Opciones = new javax.swing.JPanel();
+        lblGuardar = new javax.swing.JLabel();
         lblModificar = new javax.swing.JLabel();
         lblEliminar = new javax.swing.JLabel();
-        lblCancelar = new javax.swing.JLabel();
         lblNuevo = new javax.swing.JLabel();
+        lblCancelar = new javax.swing.JLabel();
         lblSalir = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
+        jSeparator5 = new javax.swing.JSeparator();
+        txt_fechaAdquisicion = new javax.swing.JFormattedTextField();
 
         setUndecorated(true);
 
@@ -99,7 +124,36 @@ public class frm_auto extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(0, 153, 153));
         jLabel9.setText("Tipo Transmición:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        txt_codigo.setEnabled(false);
+
+        txt_placa.setEnabled(false);
+        txt_placa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_placaKeyTyped(evt);
+            }
+        });
+
+        txt_marca.setEnabled(false);
+        txt_marca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_marcaKeyTyped(evt);
+            }
+        });
+
+        txt_carga_util.setEnabled(false);
+        txt_carga_util.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_carga_utilKeyTyped(evt);
+            }
+        });
+
+        cmb_color.setEnabled(false);
+
+        cmb_tipo_combustible.setEnabled(false);
+
+        cmb_tipo_transmicion.setEnabled(false);
+
+        tbl_mostrar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -110,7 +164,7 @@ public class frm_auto extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbl_mostrar);
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/auto.png"))); // NOI18N
@@ -118,19 +172,39 @@ public class frm_auto extends javax.swing.JFrame {
         Opciones.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         Opciones.setOpaque(false);
 
+        lblGuardar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar.png"))); // NOI18N
+        lblGuardar.setEnabled(false);
+        lblGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lblGuardarMousePressed(evt);
+            }
+        });
+
         lblModificar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/modificar_empleado.png"))); // NOI18N
 
         lblEliminar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/eliminar_empleado.png"))); // NOI18N
-
-        lblCancelar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cancelar.png"))); // NOI18N
+        lblEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/eliminar.png"))); // NOI18N
 
         lblNuevo.setForeground(new java.awt.Color(0, 153, 153));
         lblNuevo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/nuevo_empleado.png"))); // NOI18N
         lblNuevo.setOpaque(true);
+        lblNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lblNuevoMousePressed(evt);
+            }
+        });
+
+        lblCancelar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cancelar.png"))); // NOI18N
+        lblCancelar.setEnabled(false);
+        lblCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lblCancelarMousePressed(evt);
+            }
+        });
 
         lblSalir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/salir.png"))); // NOI18N
@@ -148,43 +222,59 @@ public class frm_auto extends javax.swing.JFrame {
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
         javax.swing.GroupLayout OpcionesLayout = new javax.swing.GroupLayout(Opciones);
         Opciones.setLayout(OpcionesLayout);
         OpcionesLayout.setHorizontalGroup(
             OpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(OpcionesLayout.createSequentialGroup()
                 .addComponent(lblNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
+                .addComponent(lblGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
+                .addComponent(lblModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
+                .addComponent(lblEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addComponent(lblCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(lblSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         OpcionesLayout.setVerticalGroup(
             OpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(lblNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(lblModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(lblEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(lblSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jSeparator4)
             .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(OpcionesLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jSeparator5)
+            .addComponent(lblSalir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        try {
+            txt_fechaAdquisicion.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txt_fechaAdquisicion.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -219,10 +309,10 @@ public class frm_auto extends javax.swing.JFrame {
                             .addComponent(jLabel8))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txt_fecha_adquisicion)
                             .addComponent(cmb_color, 0, 115, Short.MAX_VALUE)
                             .addComponent(cmb_tipo_combustible, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmb_tipo_transmicion, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(cmb_tipo_transmicion, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txt_fechaAdquisicion))
                         .addGap(39, 39, 39))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 624, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -238,7 +328,7 @@ public class frm_auto extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Opciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -265,7 +355,7 @@ public class frm_auto extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(txt_fecha_adquisicion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_fechaAdquisicion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(11, 11, 11)
                         .addComponent(cmb_color, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -278,7 +368,7 @@ public class frm_auto extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addComponent(cmb_tipo_transmicion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
         );
@@ -286,10 +376,112 @@ public class frm_auto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void lblGuardarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGuardarMousePressed
+        // TODO add your handling code here:
+        if(opc == 1){
+            double cargaUtil = Double.parseDouble(txt_carga_util.getText());
+            int d = Integer.parseInt(txt_fechaAdquisicion.getText().substring(0,2));
+            int m = Integer.parseInt(txt_fechaAdquisicion.getText().substring(3,5));
+            int a = Integer.parseInt(txt_fechaAdquisicion.getText().substring(6,10));
+            Auto obj = new Auto(cargaUtil, txt_codigo.getText(),txt_placa.getText(),txt_marca.getText(),cmb_color.getSelectedItem().toString(),cmb_tipo_combustible.getSelectedItem().toString(),cmb_tipo_transmicion.getSelectedItem().toString(),new Date(a-1900,m-1,d));
+            frm_main.autos.add(obj);
+        }
+        imprimir();
+
+        txt_carga_util.setEnabled(false);
+        txt_codigo.setEnabled(false);
+        txt_fechaAdquisicion.setEnabled(false);
+        txt_marca.setEnabled(false);
+        txt_placa.setEnabled(false);
+        cmb_color.setEnabled(false);
+        cmb_tipo_transmicion.setEnabled(false);
+        cmb_tipo_combustible.setEnabled(false);
+
+        txt_carga_util.setText("");
+        txt_codigo.setText("");
+        txt_fechaAdquisicion.setText("");
+        txt_marca.setText("");
+        txt_placa.setText("");
+        cmb_color.setToolTipText("");
+        cmb_tipo_transmicion.setToolTipText("");
+        cmb_tipo_combustible.setToolTipText("");
+
+        lblNuevo.setEnabled(true);
+        lblGuardar.setEnabled(false);
+        lblCancelar.setEnabled(false);
+        lblEliminar.setEnabled(true);
+        lblModificar.setEnabled(true);
+    }//GEN-LAST:event_lblGuardarMousePressed
+
+    private void lblNuevoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNuevoMousePressed
+        // TODO add your handling code here:
+        opc = 1;
+        txt_carga_util.setEnabled(true);
+        txt_codigo.setEnabled(true);
+        txt_fechaAdquisicion.setEnabled(true);
+        txt_marca.setEnabled(true);
+        txt_placa.setEnabled(true);
+        cmb_color.setEnabled(true);
+        cmb_tipo_transmicion.setEnabled(true);
+        cmb_tipo_combustible.setEnabled(true);
+
+        txt_carga_util.setText("");
+        txt_codigo.setText("");
+        txt_fechaAdquisicion.setText("");
+        txt_marca.setText("");
+        txt_placa.setText("");
+        cmb_color.setToolTipText("");
+        cmb_tipo_transmicion.setToolTipText("");
+        cmb_tipo_combustible.setToolTipText("");
+
+        lblNuevo.setEnabled(false);
+        lblGuardar.setEnabled(true);
+        lblCancelar.setEnabled(true);
+        lblEliminar.setEnabled(false);
+        lblModificar.setEnabled(false);
+
+        txt_codigo.requestFocus();
+    }//GEN-LAST:event_lblNuevoMousePressed
+
+    private void lblCancelarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCancelarMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblCancelarMousePressed
+
     private void lblSalirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSalirMousePressed
         // TODO add your handling code here:
         this.hide();
     }//GEN-LAST:event_lblSalirMousePressed
+
+    private void txt_placaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_placaKeyTyped
+        // TODO add your handling code here:
+        int cant = 6;
+        char c = evt.getKeyChar();
+        if(txt_placa.getText().length() == cant){
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "La placa SOLO ADMITE 6 caracteres");
+        }
+    }//GEN-LAST:event_txt_placaKeyTyped
+
+    private void txt_marcaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_marcaKeyTyped
+        // TODO add your handling code here:
+        int cant = 25;
+        char c = evt.getKeyChar();
+        if(txt_marca.getText().length() == cant){
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "La marca SOLO ADMITE 25 letras");
+        }
+    }//GEN-LAST:event_txt_marcaKeyTyped
+
+    private void txt_carga_utilKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_carga_utilKeyTyped
+        // TODO add your handling code here:
+        int cant = 4;
+        char c = evt.getKeyChar();
+        if(c <'0' || c >'9'){ evt.consume(); }
+        if(txt_carga_util.getText().length() == cant){
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "La carga util SOLO ADMITE maximo numero de 4 cifras");
+        }
+    }//GEN-LAST:event_txt_carga_utilKeyTyped
 
     /**
      * @param args the command line arguments
@@ -346,15 +538,17 @@ public class frm_auto extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JLabel lblCancelar;
     private javax.swing.JLabel lblEliminar;
+    private javax.swing.JLabel lblGuardar;
     private javax.swing.JLabel lblModificar;
     private javax.swing.JLabel lblNuevo;
     private javax.swing.JLabel lblSalir;
+    private javax.swing.JTable tbl_mostrar;
     private javax.swing.JTextField txt_carga_util;
     private javax.swing.JTextField txt_codigo;
-    private javax.swing.JTextField txt_fecha_adquisicion;
+    private javax.swing.JFormattedTextField txt_fechaAdquisicion;
     private javax.swing.JTextField txt_marca;
     private javax.swing.JTextField txt_placa;
     // End of variables declaration//GEN-END:variables

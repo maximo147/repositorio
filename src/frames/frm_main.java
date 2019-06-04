@@ -5,14 +5,23 @@
  */
 package frames;
 
+//la chica parada esa mirandote ta biennn
 
 import Clases.ClienteEmpresa;
+import Clases.ClienteParticular;
+import Clases.DestinatarioEmpresa;
+import Clases.DestinatarioParticular;
+import Clases.TipoArea;
+import Clases.Auto;
+import Clases.Camion;
 import Clases.Empleado;
+import Clases.Tipo_Producto;
+import Clases.Moto;
+import Clases.Producto;
+import frames.CambiaPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import java.util.LinkedList;
 import panelesMenu.pnl_activo;
 import panelesMenu.pnl_almacen;
 import panelesMenu.pnl_cliente;
@@ -24,7 +33,17 @@ import panelesMenu.pnl_rrhh;
  * @author Max
  */
 public class frm_main extends javax.swing.JFrame {
-    public static ArrayList<ClienteEmpresa> clientes_empresa = new ArrayList<ClienteEmpresa>();
+    public static LinkedList<ClienteEmpresa> clientes_empresa = new LinkedList<>();
+    public static LinkedList<ClienteParticular> clientes_particular = new LinkedList<>();
+    public static LinkedList<DestinatarioEmpresa> destinatario_empresa = new LinkedList<>();
+    public static LinkedList<DestinatarioParticular> destinatario_particular = new LinkedList<>();
+    public static LinkedList<TipoArea> tipo_areas = new LinkedList<>();
+    public static LinkedList<Tipo_Producto> tipo_productos = new LinkedList<>();
+    public static LinkedList<Auto> autos = new LinkedList<>();
+    public static LinkedList<Camion> camiones = new LinkedList<>();
+    public static LinkedList<Empleado> empleados = new LinkedList<>();
+    public static LinkedList<Moto> motos = new LinkedList<>();
+    public static LinkedList<Producto> productos = new LinkedList<>();
     /**
      * Creates new form frm_Main
      */
